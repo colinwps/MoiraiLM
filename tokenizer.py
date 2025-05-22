@@ -175,7 +175,7 @@ def load_corpus_from_file(filepath, encoding='utf-8'):
 
 
 if __name__ == "__main__":
-    corpus = load_corpus_from_file("水浒传.txt")
+    corpus = load_corpus_from_file("shuihu.txt")
 
     tokenizer = BPETokenizer()
     tokenizer.train(corpus, vocab_size=500)

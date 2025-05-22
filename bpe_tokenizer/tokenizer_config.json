@@ -1,0 +1,13 @@
+{
+  "model_type": "bpe",
+  "vocab_size": 500,
+  "special_tokens": [
+    "[PAD]",
+    "[UNK]",
+    "[CLS]",
+    "[SEP]",
+    "[MASK]"
+  ],
+  "merges_file": "merges.txt",
+  "vocab_file": "vocab.json"
+}
