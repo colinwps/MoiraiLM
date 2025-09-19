@@ -209,7 +209,7 @@ def train_model(model, data_loader, epochs, device):
 # 6. 主程序
 def main():
     # 参数设置
-    corpus_file = 'shuihu.txt'
+    corpus_file = 'data/raw_shuihu.txt'
     vocab_size = 7000  # Reduced to avoid vocab size error
     embed_dim = 256
     max_seq_len = 50

@@ -2,7 +2,7 @@
 """
 训练简化版 GPT 模型
 用法：
-    python main.py workdir/spm_shuihu.model data/shuihu.txt workdir/gpt_shuihu.pth
+    python scripts/train_gpt.py workdir/spm_shuihu.model data/shuihu.txt workdir/gpt_shuihu.pth
 """
 
 import sys
