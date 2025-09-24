@@ -44,4 +44,8 @@ def main():
     print(result)
 
 if __name__ == "__main__":
+<<<<<<< Updated upstream
     main()
+=======
+    main()
+>>>>>>> Stashed changes

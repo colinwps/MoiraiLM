@@ -36,4 +36,8 @@ def main():
     train_tokenizer(input_path, model_prefix, vocab_size)
 
 if __name__ == "__main__":
+<<<<<<< Updated upstream
     main()
+=======
+    main()
+>>>>>>> Stashed changes

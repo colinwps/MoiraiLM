@@ -10,6 +10,7 @@ import sys
 import re
 
 def clean_text(text: str) -> str:
+<<<<<<< Updated upstream
     # ✅ 只保留中文和常见标点
     allowed = re.compile(r"[^\u4e00-\u9fff。，、！？：；（）《》——…\n ]+")
     text = allowed.sub(" ", text)
@@ -21,6 +22,19 @@ def clean_text(text: str) -> str:
     text = re.sub(r"第[一二三四五六七八九十百千0-9]+回.*\n", "", text)
 
     # ✅ 按标点分句（句号、问号、感叹号），切分后加回标点
+=======
+    # 只保留中文和常见标点
+    allowed = re.compile(r"[^\u4e00-\u9fff。，、！？：；（）《》——…\n ]+")
+    text = allowed.sub(" ", text)
+
+    # 去掉多余空格
+    text = re.sub(r"\s+", " ", text)
+
+    # 去掉章节标题 “第X回 …”
+    text = re.sub(r"第[一二三四五六七八九十百千0-9]+回.*\n", "", text)
+
+    # 按标点分句（句号、问号、感叹号），切分后加回标点
+>>>>>>> Stashed changes
     sentences = re.split(r"([。！？])", text)
     merged = []
     for i in range(0, len(sentences)-1, 2):
@@ -50,8 +64,16 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(clean)
 
+<<<<<<< Updated upstream
     print(f"✅ 清洗完成，输出保存到 {out_path}")
     print(f"示例前5行：\n" + "\n".join(clean.splitlines()[:5]))
 
 if __name__ == "__main__":
     main()
+=======
+    print(f"清洗完成，输出保存到 {out_path}")
+    print(f"示例前5行：\n" + "\n".join(clean.splitlines()[:5]))
+
+if __name__ == "__main__":
+    main()
+>>>>>>> Stashed changes
