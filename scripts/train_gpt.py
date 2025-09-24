@@ -12,10 +12,7 @@ import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 import sentencepiece as spm
-<<<<<<< Updated upstream
-=======
 from tqdm import tqdm
->>>>>>> Stashed changes
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BLOCK_SIZE = 128
@@ -23,20 +20,14 @@ BATCH_SIZE = 16
 EPOCHS = 5
 LR = 3e-4
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 def clean_text(text: str) -> str:
     allowed = re.compile(r"[^\u4e00-\u9fff。，、！？：；（）《》——…\n ]+")
     text = allowed.sub(" ", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 class TextDataset(Dataset):
     def __init__(self, token_ids, block_size):
         self.ids = token_ids
@@ -50,10 +41,7 @@ class TextDataset(Dataset):
         y = torch.tensor(self.ids[idx + 1: idx + 1 + self.block_size], dtype=torch.long)
         return x, y
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 class MultiHeadSelfAttention(nn.Module):
     def __init__(self, embed_dim, num_heads, attn_dropout=0.1):
         super().__init__()
@@ -77,10 +65,7 @@ class MultiHeadSelfAttention(nn.Module):
         out = out.transpose(1, 2).contiguous().view(B, T, C)
         return self.out(out)
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 class FeedForward(nn.Module):
     def __init__(self, dim, hidden_dim, dropout=0.1):
         super().__init__()
@@ -90,40 +75,26 @@ class FeedForward(nn.Module):
             nn.Linear(hidden_dim, dim),
             nn.Dropout(dropout)
         )
-<<<<<<< Updated upstream
-    def forward(self, x): return self.net(x)
-
-=======
 
     def forward(self, x): return self.net(x)
 
 
->>>>>>> Stashed changes
 class TransformerBlock(nn.Module):
     def __init__(self, dim, num_heads, dropout=0.1):
         super().__init__()
         self.ln1 = nn.LayerNorm(dim)
         self.attn = MultiHeadSelfAttention(dim, num_heads, dropout)
         self.ln2 = nn.LayerNorm(dim)
-<<<<<<< Updated upstream
-        self.ff = FeedForward(dim, dim*4, dropout)
-=======
         self.ff = FeedForward(dim, dim * 4, dropout)
->>>>>>> Stashed changes
 
     def forward(self, x):
         x = x + self.attn(self.ln1(x))
         x = x + self.ff(self.ln2(x))
         return x
 
-<<<<<<< Updated upstream
-class GPTLike(nn.Module):
-    def __init__(self, vocab_size, block_size, n_layers=6, dim=256, num_heads=8):
-=======
 
 class GPTLike(nn.Module):
     def __init__(self, vocab_size, block_size, n_layers=2, dim=128, num_heads=4):
->>>>>>> Stashed changes
         super().__init__()
         self.token_emb = nn.Embedding(vocab_size, dim)
         self.pos_emb = nn.Embedding(block_size, dim)
@@ -139,26 +110,17 @@ class GPTLike(nn.Module):
             x = block(x)
         return self.head(self.ln(x))
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 def train(model, dataset, epochs=EPOCHS, batch_size=BATCH_SIZE, lr=LR):
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     opt = torch.optim.AdamW(model.parameters(), lr=lr)
     loss_fn = nn.CrossEntropyLoss()
     model.train()
-<<<<<<< Updated upstream
-    for ep in range(epochs):
-        total_loss = 0
-        for xb, yb in loader:
-=======
     step = 0
     for ep in range(epochs):
         total_loss = 0
         pbar = tqdm(loader, desc=f"Epoch {ep + 1}/{epochs}")
         for xb, yb in pbar:
->>>>>>> Stashed changes
             xb, yb = xb.to(DEVICE), yb.to(DEVICE)
             logits = model(xb)
             loss = loss_fn(logits.view(-1, logits.size(-1)), yb.view(-1))
@@ -166,11 +128,6 @@ def train(model, dataset, epochs=EPOCHS, batch_size=BATCH_SIZE, lr=LR):
             loss.backward()
             opt.step()
             total_loss += loss.item()
-<<<<<<< Updated upstream
-        avg_loss = total_loss / len(loader)
-        ppl = math.exp(avg_loss)
-        print(f"Epoch {ep+1}/{epochs} | Loss {avg_loss:.4f} | PPL {ppl:.2f}")
-=======
             step += 1
             if step % 100 == 0:
                 pbar.set_postfix(loss=f"{loss.item():.4f}")
@@ -178,7 +135,6 @@ def train(model, dataset, epochs=EPOCHS, batch_size=BATCH_SIZE, lr=LR):
         ppl = math.exp(avg_loss)
         print(f"[Epoch {ep + 1}] Avg Loss {avg_loss:.4f} | PPL {ppl:.2f}")
 
->>>>>>> Stashed changes
 
 def main():
     if len(sys.argv) < 4:
@@ -198,11 +154,6 @@ def main():
     torch.save(model.state_dict(), out_path)
     print(f"✅ 模型已保存: {out_path}")
 
-<<<<<<< Updated upstream
-if __name__ == "__main__":
-    main()
-=======
 
 if __name__ == "__main__":
     main()
->>>>>>> Stashed changes
